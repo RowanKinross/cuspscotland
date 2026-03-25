@@ -1,0 +1,16 @@
+
+/* Reset some default styles */
+* {
+	box-sizing: border-box;
+}
+
+a {
+	color: #3cb371;
+	text-decoration: none;
+	transition: color 0.2s;
+}
+a:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+
