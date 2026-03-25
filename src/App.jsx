@@ -14,7 +14,7 @@ function App() {
           className="banner-image"
         />
         <div className="overlay">
-          <h1 className="site-title">Cusp Scotland</h1>
+          <h1 className="site-title">Cusp</h1>
           <h2 className="site-tagline">Support & Wellbeing</h2>
         </div>
       </header>
@@ -23,7 +23,7 @@ function App() {
           <h3>Welcome</h3>
           <p>
 
-            Welcome to Cusp Scotland, a community interest company dedicated to providing social work activities and support services aimed at enhancing the well-being of individuals and communities in Edinburgh. Our organization focuses on assisting vulnerable populations, including those in need of social care and health-related support.
+            Welcome to Cusp (Scotland), a community interest company dedicated to providing social work activities and support services aimed at enhancing the well-being of individuals and communities in Edinburgh. Our organization focuses on assisting vulnerable populations, including those in need of social care and health-related support.
           </p>
         </section>
         <section className="about-section">
