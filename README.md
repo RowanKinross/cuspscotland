@@ -1,2 +1,2 @@
 # cuspscotland
-website for a counsellin organisation
+website for a counselling organisation
