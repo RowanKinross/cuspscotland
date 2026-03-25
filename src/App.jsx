@@ -14,8 +14,8 @@ function App() {
           className="banner-image"
         />
         <div className="overlay">
-          <h1 className="site-title">Cusp</h1>
-          <h2 className="site-tagline">Support & Wellbeing</h2>
+          <h1 className="site-title">Cusp - Where Change Happens</h1>
+          <h2 className="site-tagline">Support & Wellbeing Using the <strong className='naturalEnvironment'>Natural Environment.</strong></h2>
         </div>
       </header>
       <main className="content">
@@ -23,13 +23,13 @@ function App() {
           <h3>Welcome</h3>
           <p>
 
-            Welcome to Cusp (Scotland), a community interest company dedicated to providing social work activities and support services aimed at enhancing the well-being of individuals and communities in Edinburgh. Our organization focuses on assisting vulnerable populations, including those in need of social care and health-related support.
+            Welcome to Cusp (Scotland), a community interest company dedicated to providing outdoor activities and support services aimed at enhancing the well-being of individuals and communities in Edinburgh and across Scotland. Our organisation focuses on assisting vulnerable populations, including those in need of social care and health-related support.
           </p>
         </section>
         <section className="about-section">
           <h3>About</h3>
           <p>
-            Founded by Jonny and Alex - with a combined experience of 60+ years in social work, counselling, and community support. We are passionate about making a positive impact on the lives of those who approach us, and we are committed to fostering a supportive and inclusive environment for all members of our community.
+            Founded by Jonny and Alex - with a combined experience of 60+ years in outdoor leadership, social work, recovery, counselling, psychotherapy and community support. We are passionate about making a positive impact on the lives of those who approach us, and we are committed to fostering a supportive and inclusive environment for all members of our community.
           </p>
         </section>
         <section className="contact-section">
