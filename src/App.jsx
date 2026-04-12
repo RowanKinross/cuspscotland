@@ -72,7 +72,9 @@ function App() {
             >Email</div>
             <a 
               className='contact-info-link'
-              href='https://www.linkedin.com/company/cuspcic/'>LinkedIn</a>
+              href='https://www.linkedin.com/company/cuspcic/'
+              target='_blank'
+              >LinkedIn</a>
           </div>
         {showModal && (
           <div className="modal-overlay" onClick={() => setShowModal(false)}>
