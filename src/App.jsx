@@ -8,18 +8,11 @@ function App() {
   return (
     <div className="main-wrapper">
       <header className="header">
-        {/* <img
-          src="/Landscape-2_Noise.jpg"
-          alt="Scotland landscape banner"
-          className="banner-image"
-        /> */}
-        <div className="overlay">
           <img
           className="cuspLogo"
           src="/Diamond_Logo_DarkSand.png"
           alt="Cusp Scotland logo"
           />
-        </div>
       </header>
       <main className="content">
         <section className="intro-section">
@@ -36,10 +29,15 @@ function App() {
           </p>
         </section>
         <section className="contact-section">
-          <h3>Contact us</h3>
-          <p>
-            mail@cuspscotland.info<br />
-          </p>
+          <h3>Contact</h3>
+          <div className="contact-info">
+            <a 
+              className='contact-info-link'
+              href="mailto:mail@cuspscotland.info">mail@cuspscotland.info</a>
+            <a 
+              className='contact-info-link'
+              href='https://www.linkedin.com/company/cuspcic/'>LinkedIn</a>
+          </div>
         </section>
       </main>
       <footer className="footer">
