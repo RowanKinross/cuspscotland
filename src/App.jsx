@@ -51,7 +51,7 @@ function App() {
       </header>
       <main className="content">
         <section className="intro-section">
-          <h2 className="site-tagline">Support & wellbeing using the natural environment.</h2>
+          <h2 className="site-tagline">Support & wellbeing using the natural environment</h2>
           <h3>Who we are</h3>
           <p>
             Cusp (Scotland) is a community interest company dedicated to providing outdoor activities and support services aimed at enhancing the well-being of individuals and communities in Edinburgh and across Scotland. Our organisation focuses on assisting vulnerable populations, including those in need of social care and health-related support.
@@ -101,6 +101,14 @@ function App() {
         </section>
       </main>
       <footer className="footer">
+        <div className='footerImgAndTag'>
+          <img
+            className="cuspLogoFooter"
+            src="/CUSP_Logo_Flat_Dark.png"
+            alt="Cusp Scotland logo"
+            />
+          <h3 className='changeHappens'>Where change happens</h3>
+        </div>
         <p>&copy; {new Date().getFullYear()} Cusp Scotland. All rights reserved.</p>
       </footer>
     </div>
