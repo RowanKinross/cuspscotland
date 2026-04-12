@@ -123,7 +123,81 @@ body, html, #root {
 .contact-info-link {
 	color: var(--cusp-light);
 	text-decoration: underline;
+	cursor: pointer;
 }
+
+
+
+/* Modal styles for contact form */
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0,0,0,0.4);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+.modal {
+	background: var(--cusp-light);
+	color: var(--cusp-brown);
+	padding: 2rem 1.5rem 1.5rem 1.5rem;
+	border-radius: 8px;
+	box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+	min-width: 320px;
+	max-width: 90vw;
+	position: relative;
+}
+.modal-close {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	background: none;
+	border: none;
+	font-size: 1.5rem;
+	cursor: pointer;
+}
+.contact-form label {
+	display: block;
+	margin-bottom: 0.75rem;
+}
+.contact-form input,
+.contact-form textarea {
+	width: 100%;
+	padding: 0.5rem;
+	margin-top: 0.25rem;
+	margin-bottom: 0.5rem;
+	border: 1px solid #fff;
+	border-radius: 4px;
+	font-size: 1rem;
+}
+.contact-form button[type="submit"] {
+	background: var(--cusp-tan);
+	color: #fff;
+	border: none;
+	padding: 0.5rem 1.5rem;
+	border-radius: 4px;
+	font-size: 1rem;
+	cursor: pointer;
+	margin-top: 0.5rem;
+}
+.contact-form button[disabled] {
+	opacity: 0.7;
+	cursor: not-allowed;
+}
+.form-feedback {
+	margin-top: 0.5rem;
+	color: var(--cusp-brown);
+	font-weight: 500;
+}
+
+
+
+
+
 
 .footer {
 	text-align: center;

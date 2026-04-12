@@ -1,10 +1,45 @@
 import React, { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 import dayjs from 'dayjs';
 import './App.css';
 
 
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [sending, setSending] = useState(false);
+  const [feedback, setFeedback] = useState('');
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSending(true);
+    setFeedback('');
+    emailjs.send(
+      'service_z4gztrd', // Service ID
+      'template_ovrfp3p', // Template ID
+      {
+        name: form.name,
+        email: form.email,
+        message: form.message,
+        time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+      },
+      '7KUqYQDRMLAewrq1b' // Public key
+    ).then(
+      (result) => {
+        setFeedback('Message sent! We will get back to you soon.');
+        setForm({ name: '', email: '', message: '' });
+      },
+      (error) => {
+        setFeedback('Failed to send. Please try again.');
+      }
+    ).finally(() => setSending(false));
+  };
+
   return (
     <div className="main-wrapper">
       <header className="header">
@@ -31,13 +66,38 @@ function App() {
         <section className="contact-section">
           <h3>Contact</h3>
           <div className="contact-info">
-            <a 
-              className='contact-info-link'
-              href="mailto:mail@cuspscotland.info">mail@cuspscotland.info</a>
+            <div
+              className='contact-info-link' 
+              onClick={() => setShowModal(true)}
+            >Email</div>
             <a 
               className='contact-info-link'
               href='https://www.linkedin.com/company/cuspcic/'>LinkedIn</a>
           </div>
+        {showModal && (
+          <div className="modal-overlay" onClick={() => setShowModal(false)}>
+            <div className="modal" onClick={e => e.stopPropagation()}>
+              <button className="modal-close" onClick={() => setShowModal(false)}>×</button>
+              <h2>Contact us</h2>
+              <form className="contact-form" onSubmit={handleSubmit}>
+                <label>
+                  Name
+                  <input type="text" name="name" value={form.name} onChange={handleChange} required />
+                </label>
+                <label>
+                  Email
+                  <input type="email" name="email" value={form.email} onChange={handleChange} required />
+                </label>
+                <label>
+                  Message
+                  <textarea name="message" value={form.message} onChange={handleChange} required />
+                </label>
+                <button type="submit" disabled={sending}>{sending ? 'Sending...' : 'Send'}</button>
+                {feedback && <div className="form-feedback">{feedback}</div>}
+              </form>
+            </div>
+          </div>
+        )}
         </section>
       </main>
       <footer className="footer">
