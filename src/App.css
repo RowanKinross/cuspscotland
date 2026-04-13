@@ -5,6 +5,7 @@
 /* Color variables */
 :root {
 	--cusp-brown: #3f3834;
+	--cusp-brownDark: #3a3430;
 	--cusp-tan: #685748;
 	--cusp-gold: #cfba64;
 	--cusp-light: #d8d1ae;
@@ -64,30 +65,17 @@ body, html, #root {
 	}
 
 .content {
-	flex: 1;
-	max-width: 100%;
-	padding: 10%;
 	background-color: var(--cusp-brown) ;
 }
-.content::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
+.contentNoise {
+	position: relative;
+	flex: 1;
 	width: 100%;
 	height: 100%;
-	pointer-events: none;
-	z-index: 1;
-	opacity: 0.38;
-	/* background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><filter id="n" x="0" y="0"><feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="5" stitchTiles="stitch"/></filter><rect width="200" height="200" fill="%23413831"/><rect width="200" height="200" filter="url(%23n)" opacity="0.75"/></svg>'); */
+	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><filter id="n" x="0" y="0"><feTurbulence type="turbulence" baseFrequency="0.5" numOctaves="10" stitchTiles="stitch"/></filter><rect width="400" height="400" fill="%233a3430"/><rect width="400" height="400" filter="url(%23n)" opacity="0.23"/></svg>');
 	background-repeat: repeat;
+	padding: 10%;
 }
-
-.content {
-	position: relative;
-	z-index: 0;
-	}
-
 
 .intro-section h3,
 .about-section h3 {

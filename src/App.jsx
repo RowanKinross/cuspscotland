@@ -50,6 +50,7 @@ function App() {
           />
       </header>
       <main className="content">
+        <div className='contentNoise'>
         <section className="intro-section">
           <h2 className="site-tagline">Support & wellbeing using the natural environment</h2>
           <h3>Who we are</h3>
@@ -101,6 +102,7 @@ function App() {
           </div>
         )}
         </section>
+        </div>
       </main>
       <footer className="footer">
         <div className='footerImgAndTag'>
