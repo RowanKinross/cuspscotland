@@ -293,8 +293,8 @@ const ReferralForm = ({ onClose }) => {
           {/* Section 9 */}
           <h3>Section 9: Consent & Signature</h3>
           <label className="checkbox-label">
-            <input type="checkbox" name="consentInfo" checked={form.consentInfo} onChange={handleChange} />
             22a. I confirm that the information provided is accurate to the best of my knowledge*
+            <input type="checkbox" name="consentInfo" checked={form.consentInfo} onChange={handleChange} />
             {touched.consentInfo && errors.consentInfo && <span className="form-error">{errors.consentInfo}</span>}
           </label>
           <div className="form-note" style={{marginBottom: '0.5rem'}}>
@@ -303,8 +303,8 @@ const ReferralForm = ({ onClose }) => {
             All CUSP staff and Volunteers are members of PVG and adhere to CUSP’s ethical code of practice which includes a confidentiality agreement with all participants/clients. Lead practitioners are members of professional governing bodies (details available on request) membership of which requires adherence to a full code of professional ethics.
           </div>
           <label className="checkbox-label">
-            <input type="checkbox" name="consentStore" checked={form.consentStore} onChange={handleChange} />
             22b. I give CUSP full consent to store the information I have provided on this form*
+            <input type="checkbox" name="consentStore" checked={form.consentStore} onChange={handleChange} />
             {touched.consentStore && errors.consentStore && <span className="form-error">{errors.consentStore}</span>}
           </label>
           <label>
