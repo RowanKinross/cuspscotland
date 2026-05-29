@@ -80,9 +80,9 @@ function App() {
               >LinkedIn</a>
           </div>
           <div className="contact-info">
-            <div className="contact-info-link"  onClick={() => setShowReferral(true)}>
+            {/* <div className="contact-info-link"  onClick={() => setShowReferral(true)}>
               BRAW Weekend Referral Form
-            </div>
+            </div> */}
           </div>
         {showModal && (
           <div className="modal-overlay" onClick={() => setShowModal(false)}>
