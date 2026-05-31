@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import dayjs from 'dayjs';
 import './App.css';
-import ReferralForm from './components/ReferralForm';
 
 
 
 function App() {
   const [showModal, setShowModal] = useState(false);
-  const [showReferral, setShowReferral] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sending, setSending] = useState(false);
   const [feedback, setFeedback] = useState('');
@@ -80,9 +78,6 @@ function App() {
               >LinkedIn</a>
           </div>
           <div className="contact-info">
-            {/* <div className="contact-info-link"  onClick={() => setShowReferral(true)}>
-              BRAW Weekend Referral Form
-            </div> */}
           </div>
         {showModal && (
           <div className="modal-overlay" onClick={() => setShowModal(false)}>
@@ -107,9 +102,6 @@ function App() {
               </form>
             </div>
           </div>
-        )}
-        {showReferral && (
-          <ReferralForm onClose={() => setShowReferral(false)} />
         )}
         </section>
         </div>
