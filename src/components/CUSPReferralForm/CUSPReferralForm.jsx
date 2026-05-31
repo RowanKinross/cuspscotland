@@ -113,17 +113,44 @@ const ReferralForm = ({ onClose }) => {
   const errors = validate();
   const isValid = Object.keys(errors).length === 0;
 
-  const handleSubmit = (e) => {
+  // Helper to format all form fields as a readable string
+  const formatFormData = (form) => {
+    return [
+      'CUSP Referral',
+      '',
+      ...Object.entries(form)
+        .map(([key, value]) => {
+          if (Array.isArray(value)) return `${key}: ${value.join(', ')}`;
+          if (typeof value === 'boolean') return `${key}: ${value ? 'Yes' : 'No'}`;
+          return `${key}: ${value}`;
+        })
+    ].join('\n');
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setTouched(Object.keys(initialForm).reduce((acc, key) => ({ ...acc, [key]: true }), {}));
     if (!isValid) return;
     setSending(true);
     setFeedback('');
-    setTimeout(() => {
-      setSending(false);
-      setFeedback('Referral submitted!');
+    // Send via EmailJS
+    try {
+      await emailjs.send(
+        'service_z4gztrd', // Your EmailJS service ID
+        'template_ovrfp3p', // Your EmailJS template ID
+        {
+          message: formatFormData(form),
+          time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        },
+        '7KUqYQDRMLAewrq1b' // Your EmailJS public key
+      );
+      setFeedback('Referral sent! We will get back to you soon.');
       setForm(initialForm);
-    }, 1200);
+    } catch (error) {
+      setFeedback('Failed to send. Please try again.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
