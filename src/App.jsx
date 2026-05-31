@@ -40,14 +40,33 @@ function App() {
     ).finally(() => setSending(false));
   };
 
+  const [navOpen, setNavOpen] = useState(false);
+
   return (
     <div className="main-wrapper">
       <header className="header">
-          <img
+        <img
           className="cuspLogo"
           src="/Diamond_Logo_DarkSand.png"
           alt="Cusp Scotland logo"
-          />
+        />
+        <button
+          className={`nav-hamburger${navOpen ? ' open' : ''}`}
+          aria-label="Toggle navigation menu"
+          onClick={() => setNavOpen((open) => !open)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav className={`navdropdown${navOpen ? ' open' : ''}`}>
+          <ul>
+            <li><a href="#home" onClick={() => setNavOpen(false)}>Home</a></li>
+            <li><a href="#wilderness" onClick={() => setNavOpen(false)}>Wilderness Weekends</a></li>
+            <li><a href="#outdoor-therapy" onClick={() => setNavOpen(false)}>Individual & Group Outdoor Therapy</a></li>
+            <li><a href="#training" onClick={() => setNavOpen(false)}>Training & Partnerships</a></li>
+          </ul>
+        </nav>
       </header>
       <main className="content">
         <div className='contentNoise'>

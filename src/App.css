@@ -1,4 +1,84 @@
 @import url('https://fonts.googleapis.com/css2?family=Caprasimo&display=swap');
+/* Hamburger icon */
+.nav-hamburger {
+	position: absolute;
+	top: 2rem;
+	right: 2rem;
+	width: 2.5rem;
+	height: 2.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	background: none;
+	border: none;
+	cursor: pointer;
+	z-index: 20;
+}
+.nav-hamburger span {
+	display: block;
+	height: 0.33rem;
+	width: 100%;
+	background: var(--cusp-gold);
+	border-radius: 2px;
+	transition: all 0.3s;
+}
+.nav-hamburger.open span:nth-child(1) {
+	transform: translateY(0.83rem) rotate(45deg);
+}
+.nav-hamburger.open span:nth-child(2) {
+	opacity: 0;
+}
+.nav-hamburger.open span:nth-child(3) {
+	transform: translateY(-0.83rem) rotate(-45deg);
+}
+
+/* Dropdown nav menu */
+.navdropdown {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100vh;
+	width: 260px;
+	background: var(--cusp-brownDark);
+	box-shadow: -2px 0 12px rgba(0,0,0,0.12);
+	transform: translateX(100%);
+	transition: transform 0.3s;
+	z-index: 15;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	padding-top: 6rem;
+}
+.navdropdown.open {
+	transform: translateX(0);
+}
+.navdropdown ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+}
+.navdropdown li {
+	width: 100%;
+}
+.navdropdown a {
+	display: block;
+	width: 100%;
+	padding: 1.2rem 2rem;
+	color: var(--cusp-gold);
+	text-decoration: none;
+	font-size: 1.15rem;
+	font-family: 'Archivo', sans-serif;
+	font-weight: 500;
+	border-left: 4px solid transparent;
+	transition: color 0.2s, border-left 0.2s;
+}
+.navdropdown a:hover, .navdropdown a:focus {
+	color: var(--cusp-green);
+	border-left: 4px solid var(--cusp-green);
+	background: rgba(255,255,255,0.03);
+}
+
 
 
 
@@ -208,10 +288,19 @@ body, html, #root {
 
 
 
-
-
-
 	@media (max-width: 600px) {
+		/* navtab hamburger */
+		.navdropdown {
+		width: 80vw;
+		padding-top: 4rem;
+		}
+		.nav-hamburger {
+		top: 1rem;
+		right: 1rem;
+		width: 2rem;
+		height: 2rem;
+		}
+		/* body */
 		.site-tagline {
 			font-size: 2rem;
 		}
