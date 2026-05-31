@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ReferralForm.css';
+import './CUSPReferralForm.css';
 
 const initialForm = {
   // Section 1
@@ -34,6 +34,10 @@ const initialForm = {
   referralReason: '',
   referralWorries: '',
   // Section 9
+  activityTypes: [],
+  activityAccess: '',
+  activityFrequency: [],
+  activityTimes: [],
   consentInfo: false,
   consentStore: false,
   signature: '',
@@ -46,9 +50,21 @@ const ReferralForm = ({ onClose }) => {
   const [feedback, setFeedback] = useState('');
   const [touched, setTouched] = useState({});
 
+
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
+    const { name, value, type, checked, options, multiple } = e.target;
+    // Handle checkboxes for multi-select fields
+    if (name === 'activityTypes' || name === 'activityFrequency' || name === 'activityTimes') {
+      let updated = [...form[name]];
+      if (checked) {
+        updated.push(value);
+      } else {
+        updated = updated.filter((v) => v !== value);
+      }
+      setForm({ ...form, [name]: updated });
+    } else {
+      setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
+    }
   };
 
   const handleBlur = (e) => {
@@ -70,8 +86,6 @@ const ReferralForm = ({ onClose }) => {
     // Section 3
     if (!form.sex) errors.sex = 'Required';
     // Section 4
-    if (!form.accessibility) errors.accessibility = 'Required';
-    if (!form.medical) errors.medical = 'Required';
     // Section 5
     if (!form.address) errors.address = 'Required';
     if (!form.phone) errors.phone = 'Required';
@@ -88,6 +102,7 @@ const ReferralForm = ({ onClose }) => {
     if (!form.referralReason) errors.referralReason = 'Required';
     if (!form.referralWorries) errors.referralWorries = 'Required';
     // Section 9
+    // Section 10
     if (!form.consentInfo) errors.consentInfo = 'Required';
     if (!form.consentStore) errors.consentStore = 'Required';
     if (!form.signature) errors.signature = 'Required';
@@ -98,24 +113,51 @@ const ReferralForm = ({ onClose }) => {
   const errors = validate();
   const isValid = Object.keys(errors).length === 0;
 
-  const handleSubmit = (e) => {
+  // Helper to format all form fields as a readable string
+  const formatFormData = (form) => {
+    return [
+      'CUSP Referral',
+      '',
+      ...Object.entries(form)
+        .map(([key, value]) => {
+          if (Array.isArray(value)) return `${key}: ${value.join(', ')}`;
+          if (typeof value === 'boolean') return `${key}: ${value ? 'Yes' : 'No'}`;
+          return `${key}: ${value}`;
+        })
+    ].join('\n');
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setTouched(Object.keys(initialForm).reduce((acc, key) => ({ ...acc, [key]: true }), {}));
     if (!isValid) return;
     setSending(true);
     setFeedback('');
-    setTimeout(() => {
-      setSending(false);
-      setFeedback('Referral submitted!');
+    // Send via EmailJS
+    try {
+      await emailjs.send(
+        'service_z4gztrd', // Your EmailJS service ID
+        'template_ovrfp3p', // Your EmailJS template ID
+        {
+          message: formatFormData(form),
+          time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        },
+        '7KUqYQDRMLAewrq1b' // Your EmailJS public key
+      );
+      setFeedback('Referral sent! We will get back to you soon.');
       setForm(initialForm);
-    }, 1200);
+    } catch (error) {
+      setFeedback('Failed to send. Please try again.');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={e => e.stopPropagation()} style={{maxHeight: '90vh', overflowY: 'auto'}}>
         <button className="modal-close" onClick={onClose}>×</button>
-        <h2>BRAW Weekend Referral Form</h2>
+        <h2>CUSP Referral Form</h2>
         <p><em>All questions with an <b>*asterisk*</b> are mandatory</em></p>
         <form className="contact-form" onSubmit={handleSubmit} autoComplete="off">
           {/* Section 1 */}
@@ -132,7 +174,7 @@ const ReferralForm = ({ onClose }) => {
           {form.referrerType === 'someone' && (
             <>
               <label>
-                1.b Relation to participant
+                1.b Relation to participant*
                 <select name="referrerRelation" value={form.referrerRelation} onChange={handleChange} onBlur={handleBlur} required>
                   <option value="">Select...</option>
                   <option value="GP">GP</option>
@@ -198,14 +240,14 @@ const ReferralForm = ({ onClose }) => {
 
           {/* Section 4 */}
           <h3>Section 4: Health & Accessibility</h3>
-          <p className="form-note">BRAW experiences are in remote places that are at least 2 hours from medical treatment. We regret that the terrain to access the Bothy is not suitable for wheelchair users.</p>
+          <p className="form-note">The following helps us plan a session with you – you can always give us more information over the phone or at your taster session.</p>
           <label>
-            8. Do you have any disabilities, learning difficulties, ADHD, visual impairments, or accessibility needs we should be aware of?*
+            8. (Optional) Do you have any disabilities, learning difficulties, ADHD, visual impairments, or accessibility needs we should be aware of?
             <textarea name="accessibility" value={form.accessibility} onChange={handleChange} onBlur={handleBlur} required />
             {touched.accessibility && errors.accessibility && <span className="form-error">{errors.accessibility}</span>}
           </label>
           <label>
-            9. Do you have any medical conditions, allergies, medications, or medical aids we should know about?* [Note BRAW experiences are in remote places at least 2 hours from medical treatment]
+            9. (Optional) Do you have any medical conditions, allergies, medications, or medical aids we should know about?*
             <textarea name="medical" value={form.medical} onChange={handleChange} onBlur={handleBlur} required />
             {touched.medical && errors.medical && <span className="form-error">{errors.medical}</span>}
           </label>
@@ -228,7 +270,7 @@ const ReferralForm = ({ onClose }) => {
             {touched.email && errors.email && <span className="form-error">{errors.email}</span>}
           </label>
           <label>
-            13. [Optional] Occupation
+            13. (Optional) Occupation
             <input type="text" name="occupation" value={form.occupation} onChange={handleChange} onBlur={handleBlur} />
           </label>
 
@@ -280,18 +322,116 @@ const ReferralForm = ({ onClose }) => {
           {/* Section 8 */}
           <h3>Section 8: Referral / Support Needs</h3>
           <label>
-            20. What current or past issue(s) or concern(s) have led you to seek a wilderness break with CUSP? What are you seeking to get out of the weekend?*
+            20. What current or past issue(s) or concern(s) have led you to seek outdoor counselling or group work with CUSP? What are you seeking to get out these sessions?*
             <textarea name="referralReason" value={form.referralReason} onChange={handleChange} onBlur={handleBlur} required />
             {touched.referralReason && errors.referralReason && <span className="form-error">{errors.referralReason}</span>}
           </label>
           <label>
-            21. Is there anything you’re worried about regarding the weekend or your capacity to participate?*
+            21. Is there anything you’re worried about regarding participating in our individual or group programmes ? *
             <textarea name="referralWorries" value={form.referralWorries} onChange={handleChange} onBlur={handleBlur} required />
             {touched.referralWorries && errors.referralWorries && <span className="form-error">{errors.referralWorries}</span>}
           </label>
 
           {/* Section 9 */}
-          <h3>Section 9: Consent & Signature</h3>
+          <h3>Section 9: Type of activity/support you’re interested in</h3>
+          <div className="form-section">
+            <label>
+              22. Please tick as many or as few of the options below that appeal to you:<br/>
+              <span style={{fontSize: '0.95em'}}>(Note those marked with <b>#</b> incur additional costs)</span>
+              <div className="checkbox-group">
+                {[
+                  { label: 'Walk & Talk (Urban/greenspace based)', value: 'Walk & Talk (Urban/greenspace based)' },
+                  { label: 'Walk & Talk (Rural/more remote)#', value: 'Walk & Talk (Rural/more remote)#' },
+                  { label: 'Cycling (own bike)', value: 'Cycling (own bike)' },
+                  { label: 'Cycling (incl. bike hire)#', value: 'Cycling (incl. bike hire)#' },
+                  { label: 'Mountain biking/trials#', value: 'Mountain biking/trials#' },
+                  { label: 'Canoeing#', value: 'Canoeing#' },
+                  { label: 'Mountain/hill climb#', value: 'Mountain/hill climb#' },
+                  { label: 'Outdoor Swimming', value: 'Outdoor Swimming' },
+                  { label: 'Beach walk/combing#', value: 'Beach walk/combing#' },
+                ].map(opt => (
+                  <label key={opt.value} className="checkbox-label" style={{display: 'block'}}>
+                    <input
+                      type="checkbox"
+                      name="activityTypes"
+                      value={opt.value}
+                      checked={form.activityTypes.includes(opt.value)}
+                      onChange={handleChange}
+                    />
+                    {opt.label}
+                  </label>
+                ))}
+              </div>
+              {touched.activityTypes && errors.activityTypes && <span className="form-error">{errors.activityTypes}</span>}
+            </label>
+            <label>
+              23. How would you prefer to access these activities:
+              <select
+                name="activityAccess"
+                value={form.activityAccess}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                required
+              >
+                <option value="">Select...</option>
+                <option value="Individual">Individual</option>
+                <option value="Group">Group</option>
+                <option value="Both">Both</option>
+              </select>
+              {touched.activityAccess && errors.activityAccess && <span className="form-error">{errors.activityAccess}</span>}
+            </label>
+            <label>
+              24. Tell us how often and for how long you’d be interested in accessing these activities:
+              <div className="checkbox-group">
+                {[
+                  'Weekly', 'Fortnightly', 'Monthly', 'One-off',
+                  '1 hour', '2 hour', 'Half day', 'Full day',
+                  'Multi-days/without overnights', 'Multi-days/with overnights'
+                ].map(opt => (
+                  <label key={opt} className="checkbox-label" style={{display: 'block'}}>
+                    <input
+                      type="checkbox"
+                      name="activityFrequency"
+                      value={opt}
+                      checked={form.activityFrequency.includes(opt)}
+                      onChange={handleChange}
+                    />
+                    {opt}
+                  </label>
+                ))}
+              </div>
+              {touched.activityFrequency && errors.activityFrequency && <span className="form-error">{errors.activityFrequency}</span>}
+            </label>
+            <label>
+              25. Tell us when are the best times and days for you most weeks:
+              <div className="checkbox-group" style={{columnCount: 2}}>
+                {[
+                  'Monday Morning', 'Monday Afternoon', 'Monday Evening',
+                  'Tuesday Morning', 'Tuesday Afternoon', 'Tuesday Evening',
+                  'Wednesday Morning', 'Wednesday Afternoon', 'Wednesday Evening',
+                  'Thursday Morning', 'Thursday Afternoon', 'Thursday Evening',
+                  'Friday Morning', 'Friday Afternoon', 'Friday Evening',
+                  'Saturday Morning', 'Saturday Afternoon', 'Saturday Evening',
+                  'Sunday Morning', 'Sunday Afternoon', 'Sunday Evening',
+                ].map(opt => (
+                  <label key={opt} className="checkbox-label" style={{display: 'block'}}>
+                    <input
+                      type="checkbox"
+                      name="activityTimes"
+                      value={opt}
+                      checked={form.activityTimes.includes(opt)}
+                      onChange={handleChange}
+                    />
+                    {opt}
+                  </label>
+                ))}
+              </div>
+              {touched.activityTimes && errors.activityTimes && <span className="form-error">{errors.activityTimes}</span>}
+            </label>
+          </div>
+
+          {/* Section 10 */}
+          <h3>Section 10: Consent & Signature</h3>
           <label className="checkbox-label">
             22a. I confirm that the information provided is accurate to the best of my knowledge*
             <input type="checkbox" name="consentInfo" checked={form.consentInfo} onChange={handleChange} />
