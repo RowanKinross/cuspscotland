@@ -50,29 +50,31 @@ function App() {
           src="/Diamond_Logo_DarkSand.png"
           alt="Cusp Scotland logo"
         />
-        <button
-          className={`nav-hamburger${navOpen ? ' open' : ''}`}
-          aria-label="Toggle navigation menu"
-          onClick={() => setNavOpen((open) => !open)}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <nav className={`navdropdown${navOpen ? ' open' : ''}`}>
-          <ul>
-            <li><a href="#home" onClick={() => setNavOpen(false)}>Home</a></li>
-            <li><a href="#wilderness" onClick={() => setNavOpen(false)}>Wilderness Weekends</a></li>
-            <li><a href="#outdoor-therapy" onClick={() => setNavOpen(false)}>Individual & Group Outdoor Therapy</a></li>
-            <li><a href="#training" onClick={() => setNavOpen(false)}>Training & Partnerships</a></li>
-          </ul>
-        </nav>
       </header>
       <main className="content">
         <div className='contentNoise'>
         <section className="intro-section">
           <h2 className="site-tagline">Support & wellbeing using the natural environment</h2>
-          <h3>Who we are</h3>
+          <div className="who-nav-row">
+            <h3 style={{margin: 0}}>Who we are</h3>
+            <button
+              className={`nav-hamburger${navOpen ? ' open' : ''}`}
+              aria-label="Toggle navigation menu"
+              onClick={() => setNavOpen((open) => !open)}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <nav className={`navdropdown${navOpen ? ' open' : ''}`}>
+              <ul>
+                <li><a href="#home" onClick={() => setNavOpen(false)}>Home</a></li>
+                <li><a href="#wilderness" onClick={() => setNavOpen(false)}>Wilderness Weekends</a></li>
+                <li><a href="#outdoor-therapy" onClick={() => setNavOpen(false)}>Individual & Group Outdoor Therapy</a></li>
+                <li><a href="#training" onClick={() => setNavOpen(false)}>Training & Partnerships</a></li>
+              </ul>
+            </nav>
+          </div>
           <p>
             Cusp (Scotland) is a community interest company dedicated to providing outdoor activities and support services aimed at enhancing the well-being of individuals and communities in Edinburgh and across Scotland. Our organisation focuses on assisting vulnerable populations, including those in need of social care and health-related support.
           </p>
