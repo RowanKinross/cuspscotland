@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ReferralForm.css';
+import './CUSPReferralForm.css';
 
 const initialForm = {
   // Section 1
@@ -86,8 +86,6 @@ const ReferralForm = ({ onClose }) => {
     // Section 3
     if (!form.sex) errors.sex = 'Required';
     // Section 4
-    if (!form.accessibility) errors.accessibility = 'Required';
-    if (!form.medical) errors.medical = 'Required';
     // Section 5
     if (!form.address) errors.address = 'Required';
     if (!form.phone) errors.phone = 'Required';
@@ -104,10 +102,7 @@ const ReferralForm = ({ onClose }) => {
     if (!form.referralReason) errors.referralReason = 'Required';
     if (!form.referralWorries) errors.referralWorries = 'Required';
     // Section 9
-    if (form.activityTypes.length === 0) errors.activityTypes = 'Required';
-    if (!form.activityAccess) errors.activityAccess = 'Required';
-    if (form.activityFrequency.length === 0) errors.activityFrequency = 'Required';
-    if (form.activityTimes.length === 0) errors.activityTimes = 'Required';
+    // Section 10
     if (!form.consentInfo) errors.consentInfo = 'Required';
     if (!form.consentStore) errors.consentStore = 'Required';
     if (!form.signature) errors.signature = 'Required';
@@ -152,7 +147,7 @@ const ReferralForm = ({ onClose }) => {
           {form.referrerType === 'someone' && (
             <>
               <label>
-                1.b Relation to participant
+                1.b Relation to participant*
                 <select name="referrerRelation" value={form.referrerRelation} onChange={handleChange} onBlur={handleBlur} required>
                   <option value="">Select...</option>
                   <option value="GP">GP</option>

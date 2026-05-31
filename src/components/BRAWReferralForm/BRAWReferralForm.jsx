@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ReferralForm.css';
+import './BRAWReferralForm.css';
 
 const initialForm = {
   // Section 1
@@ -132,7 +132,7 @@ const ReferralForm = ({ onClose }) => {
           {form.referrerType === 'someone' && (
             <>
               <label>
-                1.b Relation to participant
+                1.b Relation to participant*
                 <select name="referrerRelation" value={form.referrerRelation} onChange={handleChange} onBlur={handleBlur} required>
                   <option value="">Select...</option>
                   <option value="GP">GP</option>

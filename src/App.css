@@ -79,7 +79,20 @@
 	background: rgba(255,255,255,0.03);
 }
 
-
+/* referral pages */
+.wilderness-weekends-page, .outdoor-therapy-page, .training-partnerships-page{
+	padding-bottom: 700px;
+}
+.referral-btn {
+	background: var(--cusp-tan);
+	color: var(--cusp-light);
+	border: none;
+	padding: 0.5rem 1.5rem;
+	border-radius: 4px;
+	font-size: 1rem;
+	cursor: pointer;
+	margin-top: 1rem;
+}
 
 
 /* Color variables */
