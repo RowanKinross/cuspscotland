@@ -134,7 +134,7 @@ const ReferralForm = ({ onClose }) => {
 
       await emailjs.send(
         'service_z4gztrd',
-        'template_ovrfp3p',
+        'template_xyndtc9',
         emailPayload,
         '7KUqYQDRMLAewrq1b'
       );

@@ -18,14 +18,9 @@ export const getRespondentName = (form) => {
 };
 
 export const buildReferralEmailPayload = ({ referralLabel, form }) => {
-  const respondentName = getRespondentName(form);
-  const submittedAt = dayjs().format('YYYY-MM-DD HH:mm:ss');
-
   return {
-    subject: `new ${referralLabel} referral added`,
-    message: `A new ${referralLabel} referral was submitted at ${submittedAt}.\n\nRespondent name: ${respondentName}`,
-    respondentName,
-    submittedAt,
+    refType: referralLabel,
+    name: form.surname?.trim() || '',
   };
 };
 
