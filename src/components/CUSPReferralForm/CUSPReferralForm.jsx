@@ -245,12 +245,12 @@ const ReferralForm = ({ onClose }) => {
           <p className="form-note">The following helps us plan a session with you – you can always give us more information over the phone or at your taster session.</p>
           <label>
             8. (Optional) Do you have any disabilities, learning difficulties, ADHD, visual impairments, or accessibility needs we should be aware of?
-            <textarea name="accessibility" value={form.accessibility} onChange={handleChange} onBlur={handleBlur} required />
+            <textarea name="accessibility" value={form.accessibility} onChange={handleChange} onBlur={handleBlur}  />
             {touched.accessibility && errors.accessibility && <span className="form-error">{errors.accessibility}</span>}
           </label>
           <label>
             9. (Optional) Do you have any medical conditions, allergies, medications, or medical aids we should know about?
-            <textarea name="medical" value={form.medical} onChange={handleChange} onBlur={handleBlur} required />
+            <textarea name="medical" value={form.medical} onChange={handleChange} onBlur={handleBlur} />
             {touched.medical && errors.medical && <span className="form-error">{errors.medical}</span>}
           </label>
 
