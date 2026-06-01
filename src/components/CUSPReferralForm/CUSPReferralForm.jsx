@@ -50,6 +50,7 @@ const ReferralForm = ({ onClose }) => {
   const [form, setForm] = useState(initialForm);
   const [sending, setSending] = useState(false);
   const [feedback, setFeedback] = useState('');
+  const [feedbackType, setFeedbackType] = useState('');
   const [touched, setTouched] = useState({});
 
 
@@ -121,6 +122,7 @@ const ReferralForm = ({ onClose }) => {
     if (!isValid) return;
     setSending(true);
     setFeedback('');
+    setFeedbackType('');
     let savedToFirestore = false;
     try {
       const emailPayload = buildReferralEmailPayload({ referralLabel: 'CUSP', form });
@@ -139,7 +141,8 @@ const ReferralForm = ({ onClose }) => {
         '7KUqYQDRMLAewrq1b'
       );
 
-      setFeedback('Referral  sent.');
+      setFeedback('Referral sent.');
+      setFeedbackType('success');
       setForm(initialForm);
     } catch (error) {
       setFeedback(
@@ -147,6 +150,7 @@ const ReferralForm = ({ onClose }) => {
           ? 'Referral email could not be sent.'
           : 'Failed to save referral. Please try again.'
       );
+      setFeedbackType('error');
       if (savedToFirestore) {
         setForm(initialForm);
       }
@@ -246,12 +250,11 @@ const ReferralForm = ({ onClose }) => {
           <label>
             8. (Optional) Do you have any disabilities, learning difficulties, ADHD, visual impairments, or accessibility needs we should be aware of?
             <textarea name="accessibility" value={form.accessibility} onChange={handleChange} onBlur={handleBlur}  />
-            {touched.accessibility && errors.accessibility && <span className="form-error">{errors.accessibility}</span>}
+            
           </label>
           <label>
             9. (Optional) Do you have any medical conditions, allergies, medications, or medical aids we should know about?
             <textarea name="medical" value={form.medical} onChange={handleChange} onBlur={handleBlur} />
-            {touched.medical && errors.medical && <span className="form-error">{errors.medical}</span>}
           </label>
 
           {/* Section 5 */}
@@ -461,7 +464,12 @@ const ReferralForm = ({ onClose }) => {
           </label>
 
           <button type="submit" disabled={sending || !isValid}>{sending ? 'Submitting...' : 'Submit'}</button>
-          {feedback && <div className="form-feedback">{feedback}</div>}
+          {feedback && (
+            <div className={`form-feedback ${feedbackType === 'success' ? 'form-feedback-success' : 'form-feedback-error'}`}>
+              {feedbackType === 'success' && <span className="form-feedback-icon" aria-hidden="true">✓</span>}
+              <span>{feedback}</span>
+            </div>
+          )}
         </form>
       </div>
     </div>

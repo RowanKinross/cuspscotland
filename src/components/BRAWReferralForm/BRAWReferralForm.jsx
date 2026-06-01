@@ -46,6 +46,7 @@ const ReferralForm = ({ onClose }) => {
   const [form, setForm] = useState(initialForm);
   const [sending, setSending] = useState(false);
   const [feedback, setFeedback] = useState('');
+  const [feedbackType, setFeedbackType] = useState('');
   const [touched, setTouched] = useState({});
 
   const handleChange = (e) => {
@@ -107,6 +108,7 @@ const ReferralForm = ({ onClose }) => {
     if (!isValid) return;
     setSending(true);
     setFeedback('');
+    setFeedbackType('');
     const emailPayload = buildReferralEmailPayload({ referralLabel: 'BRAW', form });
     let savedToFirestore = false;
 
@@ -126,6 +128,7 @@ const ReferralForm = ({ onClose }) => {
       );
 
       setFeedback('Referral sent.');
+      setFeedbackType('success');
       setForm(initialForm);
     } catch (error) {
       setFeedback(
@@ -133,6 +136,7 @@ const ReferralForm = ({ onClose }) => {
           ? 'Referral could not be sent.'
           : 'Failed to save referral. Please try again.'
       );
+      setFeedbackType('error');
       if (savedToFirestore) {
         setForm(initialForm);
       }
@@ -349,7 +353,12 @@ const ReferralForm = ({ onClose }) => {
           </label>
 
           <button type="submit" disabled={sending || !isValid}>{sending ? 'Submitting...' : 'Submit'}</button>
-          {feedback && <div className="form-feedback">{feedback}</div>}
+          {feedback && (
+            <div className={`form-feedback ${feedbackType === 'success' ? 'form-feedback-success' : 'form-feedback-error'}`}>
+              {feedbackType === 'success' && <span className="form-feedback-icon" aria-hidden="true">✓</span>}
+              <span>{feedback}</span>
+            </div>
+          )}
         </form>
       </div>
     </div>
