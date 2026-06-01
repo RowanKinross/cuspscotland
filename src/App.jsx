@@ -136,7 +136,7 @@ function App() {
                 <span></span>
                 <span></span>
               </button>
-              <nav className={`navdropdown${navOpen ? ' open' : ''}`}>
+              <nav className={`navdropdown ${navOpen ? 'open' : 'closed'}`}>
                 <ul>
                   <li><a href="/" onClick={e => {e.preventDefault(); setNavOpen(false); window.location.href = '/';}}>Home</a></li>
                   <li><a href="/wilderness" onClick={e => {e.preventDefault(); setNavOpen(false); window.location.href = '/wilderness';}}>Wilderness Weekends</a></li>
