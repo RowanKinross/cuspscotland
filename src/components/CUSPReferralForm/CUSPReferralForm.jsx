@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
+import { buildReferralEmailPayload, referralCollections, saveReferralSubmission } from '../../lib/referralSubmissions';
 import './CUSPReferralForm.css';
 
 const initialForm = {
@@ -113,41 +115,41 @@ const ReferralForm = ({ onClose }) => {
   const errors = validate();
   const isValid = Object.keys(errors).length === 0;
 
-  // Helper to format all form fields as a readable string
-  const formatFormData = (form) => {
-    return [
-      'CUSP Referral',
-      '',
-      ...Object.entries(form)
-        .map(([key, value]) => {
-          if (Array.isArray(value)) return `${key}: ${value.join(', ')}`;
-          if (typeof value === 'boolean') return `${key}: ${value ? 'Yes' : 'No'}`;
-          return `${key}: ${value}`;
-        })
-    ].join('\n');
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setTouched(Object.keys(initialForm).reduce((acc, key) => ({ ...acc, [key]: true }), {}));
     if (!isValid) return;
     setSending(true);
     setFeedback('');
-    // Send via EmailJS
+    let savedToFirestore = false;
     try {
+      const emailPayload = buildReferralEmailPayload({ referralLabel: 'CUSP', form });
+
+      await saveReferralSubmission({
+        collectionName: referralCollections.CUSP,
+        referralLabel: 'CUSP',
+        form,
+      });
+      savedToFirestore = true;
+
       await emailjs.send(
-        'service_z4gztrd', // Your EmailJS service ID
-        'template_ovrfp3p', // Your EmailJS template ID
-        {
-          message: formatFormData(form),
-          time: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-        },
-        '7KUqYQDRMLAewrq1b' // Your EmailJS public key
+        'service_z4gztrd',
+        'template_ovrfp3p',
+        emailPayload,
+        '7KUqYQDRMLAewrq1b'
       );
-      setFeedback('Referral sent! We will get back to you soon.');
+
+      setFeedback('Referral  sent.');
       setForm(initialForm);
     } catch (error) {
-      setFeedback('Failed to send. Please try again.');
+      setFeedback(
+        savedToFirestore
+          ? 'Referral email could not be sent.'
+          : 'Failed to save referral. Please try again.'
+      );
+      if (savedToFirestore) {
+        setForm(initialForm);
+      }
     } finally {
       setSending(false);
     }
