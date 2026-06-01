@@ -32,6 +32,12 @@
   font-size: 1.5rem;
   cursor: pointer;
 }
+.form-error {
+  display: block;
+  margin-top: 0.35rem;
+  color: #b3261e;
+  font-weight: 600;
+}
 .form-feedback {
   margin-top: 1rem;
   font-weight: bold;

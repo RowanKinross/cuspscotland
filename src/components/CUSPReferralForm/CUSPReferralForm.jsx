@@ -194,7 +194,7 @@ const ReferralForm = ({ onClose }) => {
                 {touched.referrerRelation && errors.referrerRelation && <span className="form-error">{errors.referrerRelation}</span>}
               </label>
               <label>
-                1.c Contact details of person filling in form on my behalf (name, job title, email and phone number helpful):
+                1.c Contact details of person filling in form on my behalf (name, job title, email and phone number helpful)*:
                 <textarea name="referrerContact" value={form.referrerContact} onChange={handleChange} onBlur={handleBlur} required />
                 {touched.referrerContact && errors.referrerContact && <span className="form-error">{errors.referrerContact}</span>}
               </label>
