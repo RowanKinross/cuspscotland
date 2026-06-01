@@ -249,7 +249,7 @@ const ReferralForm = ({ onClose }) => {
             {touched.accessibility && errors.accessibility && <span className="form-error">{errors.accessibility}</span>}
           </label>
           <label>
-            9. (Optional) Do you have any medical conditions, allergies, medications, or medical aids we should know about?*
+            9. (Optional) Do you have any medical conditions, allergies, medications, or medical aids we should know about?
             <textarea name="medical" value={form.medical} onChange={handleChange} onBlur={handleBlur} required />
             {touched.medical && errors.medical && <span className="form-error">{errors.medical}</span>}
           </label>
